@@ -77,6 +77,17 @@ FanAccessory.prototype.getRotationSpeed = function(callback) {
 }
 
 FanAccessory.prototype.setRotationSpeed = function(_rotationSpeed, callback) {
+  if (rotationSpeed != _rotationSpeed) {
+    let stdout = execSync(command+"speed");
+    rotationSpeed = _rotationSpeed
+    rotationSpeedMode = (rotationSpeedMode == 3) ? 0 : rotationSpeedMode + 1;
+  }
+  this.log("Set rotationSpeed: %s (%s)", rotationSpeed, rotationSpeedMode);
+  callback(null);
+}
+
+/*
+FanAccessory.prototype.setRotationSpeed = function(_rotationSpeed, callback) {
   var rs = (_rotationSpeed == 0) ? 0 : (_rotationSpeed - 1);
   var targetSpeedMode = rs/25 - ((rs/25)%1);
   this.log("TargetSpeed: %s (%s)", _rotationSpeed, targetSpeedMode);
@@ -100,6 +111,7 @@ FanAccessory.prototype.setRotationSpeed = function(_rotationSpeed, callback) {
   this.log("Set rotationSpeed: %s (%s)", rotationSpeed, rotationSpeedMode);
   callback(null);
 }
+*/
 
 FanAccessory.prototype.getServices = function() {
   return [this.service];
